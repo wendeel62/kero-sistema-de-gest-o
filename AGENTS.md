@@ -111,7 +111,89 @@ useRealtime('table', () => fetchData())
 ### Protected Routes
 Wrap admin pages with `<ProtectedRoute>` in App.tsx.
 
-## Environment Variables
+## Multi-Tenant Rules (CRITICAL)
+
+> ⚠️ Never violate these rules. Every query MUST include tenant_id filter.
+
+1. **Every Supabase query must include `.eq('tenant_id', tenantId)`**
+2. **Never omit tenant_id in INSERTs - always include explicitly**
+3. **Never mix data from different tenants**
+4. `tenantId` comes from auth context - never from URL parameters
+
+```tsx
+// ✅ CORRECT - Always filter by tenant_id
+const { data } = await supabase
+  .from('pedidos')
+  .select('*')
+  .eq('tenant_id', tenantId)
+
+// ✅ CORRECT - Always include tenant_id in INSERT
+await supabase.from('pedidos').insert({
+  tenant_id: tenantId,
+  cliente_nome: 'João',
+  // ...
+})
+
+// ❌ WRONG - Missing tenant_id filter
+const { data } = await supabase.from('pedidos').select('*')
+```
+
+## Routes
+
+| Route | Access | Description |
+|-------|--------|-------------|
+| `/` | Authenticated | Redirects to /dashboard |
+| `/login` | Public | Login screen |
+| `/dashboard` | Authenticated | KPIs dashboard |
+| `/pedidos` | Authenticated | Kanban de pedidos |
+| `/pdv` | Authenticated | Point of sale |
+| `/cardapio` | **Public** | Online menu for customers |
+| `/clientes` | Authenticated | CRM de clientes |
+| `/estoque` | Authenticated | Stock control |
+| `/financeiro` | Authenticated | Financial module |
+| `/entrega` | Authenticated | Delivery management |
+| `/agente-ia` | Authenticated | AI Agent (Atendant + Manager) |
+| `/configuracoes` | Authenticated | Store settings |
+| `/pedido/:numero` | **Public** | Order tracking |
+| `/cozinha` | **Public** | KDS - Kitchen monitor |
+| `/mesa/:numero` | **Public** | Menu via QR Code |
+| `/motoboy` | **Public** | Delivery app (token auth) |
+
+Public routes (`/cardapio`, `/pedido/:numero`, `/cozinha`, `/mesa/:numero`, `/motoboy`) have no sidebar or topbar.
+
+## Order Status Flow
+
+```
+NOVO → EM_PREPARO → SAIU_PARA_ENTREGA → ENTREGUE
+                                         ↘ CANCELADO (any stage)
+```
+
+| Status | Kanban Color |
+|--------|--------------|
+| novo | Blue |
+| em_preparo | Orange |
+| saiu_para_entrega | Purple |
+| entregue | Green |
+| cancelado | Red |
+
+## Git Conventions
+
+- Use conventional commits: `feat:`, `fix:`, `refactor:`, `chore:`
+- Example: `git commit -m "fix: corrigir erro no cardápio online"`
+- Run `npm run build` before pushing to verify TypeScript compiles
+
+## Deployment
+
+### Vercel (Recommended)
+1. Connect GitHub repository in Vercel
+2. Framework Preset: **Vite**
+3. Build Command: `npm run build`
+4. Output Directory: `dist`
+5. Add environment variables:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+
+### Environment Variables
 
 Required in `.env`:
 ```
