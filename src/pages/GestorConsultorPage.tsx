@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import { useRealtime } from '../hooks/useRealtime'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
+import { useAuth } from '../contexts/AuthContext'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale/pt-BR'
 
@@ -80,7 +81,7 @@ export default function GestorConsultorPage() {
     if (!tenantId) return
     const { data } = await supabase
       .from('pedidos')
-      .select('id, numero, cliente_nome, status, total, updated_at, canal')
+      .select('id, numero, cliente_nome, status, total, updated_at, canal, created_at, tipo')
       .eq('tenant_id', tenantId)
       .eq('canal', 'whatsapp')
       .not('status', 'in', `('entregue','cancelado','novo')`)

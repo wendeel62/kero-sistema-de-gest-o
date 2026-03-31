@@ -102,7 +102,7 @@ function PedidoCard({ pedido, compact = false }: { pedido: Pedido; compact?: boo
 }
 
 export default function GestorWhatsAppPage() {
-  const [activeTab, setActiveTab] = useState<'operador' | 'gestor'>('operador')
+  const [activeTab, setActiveTab] = useState<'operador' | 'gestor' | 'pedidos'>('pedidos')
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([])
   const [chatInput, setChatInput] = useState('')
   const [sendingMessage, setSendingMessage] = useState(false)
@@ -223,7 +223,7 @@ export default function GestorWhatsAppPage() {
   })
 
   const executarSugestao = useMutation({
-    mutationFn: async (titulo: string, action: string) => {
+    mutationFn: async ({ titulo, action }: { titulo: string; action: string }) => {
       try {
         await supabase.from('historico_agente').insert({
           tipo: 'executado',
@@ -258,7 +258,7 @@ export default function GestorWhatsAppPage() {
 
   const handleExecuteAction = (titulo: string, action: string) => {
     console.log('Executando:', action)
-    executarSugestao.mutate(titulo, action)
+    executarSugestao.mutate({ titulo, action })
   }
 
   const handleIgnoreAction = (titulo: string) => {

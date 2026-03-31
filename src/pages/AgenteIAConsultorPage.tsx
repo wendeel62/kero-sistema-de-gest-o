@@ -106,7 +106,7 @@ export default function AgenteIAConsultorPage() {
     loadAtivos()
   }, [fetchPedidosAtivos])
 
-  useRealtime<Pedido>('pedidos', () => {
+  useRealtime('pedidos', () => {
     fetchPedidosAtivos().then(setPedidosAtivos)
   })
 

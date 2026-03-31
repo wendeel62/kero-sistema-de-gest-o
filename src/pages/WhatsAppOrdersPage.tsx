@@ -180,7 +180,7 @@ export default function WhatsAppOrdersPage() {
     fetchPedidosAtivos()
   }, [fetchPedidosAtivos])
 
-  useRealtime<Pedido>('pedidos', () => {
+  useRealtime('pedidos', () => {
     fetchPedidosAtivos()
   })
 
