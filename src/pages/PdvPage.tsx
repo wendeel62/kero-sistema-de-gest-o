@@ -4,7 +4,7 @@ import { useRealtime } from '../hooks/useRealtime'
 import DivisaoConta from '../components/DivisaoConta'
 import { syncCliente } from '../lib/syncCliente'
 
-interface Produto { id: string; nome: string; preco: number; categoria_id: string }
+interface Produto { id: string; nome: string; preco: number; categoria_id: string; imagem_url?: string }
 interface Categoria { id: string; nome: string }
 interface ItemPedido { produto: Produto; quantidade: number; observacoes: string }
 interface Mesa { id: string; numero: number; capacidade: number; status: string; responsavel: string; pessoas: number; aberta_em: string }
@@ -63,16 +63,6 @@ export default function PdvPage() {
     setPessoasMesa(1)
     setResponsavelMesa('')
     fetchData()
-  }
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'livre': return 'bg-green-500/20 border-green-500 text-green-400'
-      case 'ocupada': return 'bg-red-500/20 border-red-500 text-red-400'
-      case 'aguardando_pagamento': return 'bg-yellow-500/20 border-yellow-500 text-yellow-400'
-      case 'inativa': return 'bg-gray-500/20 border-gray-500 text-gray-400'
-      default: return 'bg-gray-500/20 border-gray-500 text-gray-400'
-    }
   }
 
   const getTempoOcupada = (abertaEm: string) => {
@@ -163,18 +153,28 @@ export default function PdvPage() {
     return true
   })
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'livre': return 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
+      case 'ocupada': return 'border-[#e8391a]/40 bg-[#e8391a]/10 text-[#e8391a]'
+      case 'aguardando_pagamento': return 'border-yellow-500/40 bg-yellow-500/10 text-yellow-400'
+      case 'inativa': return 'border-gray-600 bg-gray-600/10 text-gray-400'
+      default: return 'border-gray-600 bg-gray-600/10 text-gray-400'
+    }
+  }
+
   return (
-    <div className="animate-fade-in flex gap-6 h-[calc(100vh-8rem)]">
+    <div className="animate-fade-in flex gap-6 h-[calc(100vh-8rem)] p-6">
       {/* Left - Product Grid */}
       <div className="flex-1 flex flex-col min-w-0">
-        <div className="mb-4 flex items-end justify-between">
+        <div className="mb-6 flex items-end justify-between">
           <div>
-            <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-1 block">Ponto de Venda</span>
-            <h2 className="text-4xl font-[Outfit] font-bold text-on-background tracking-tighter">PDV</h2>
+            <span className="text-[#e8391a] font-bold uppercase tracking-[0.3em] text-[10px] mb-1 block">Ponto de Venda</span>
+            <h2 className="text-4xl font-[Outfit] font-bold text-white tracking-tighter">PDV</h2>
           </div>
-          <div className="flex bg-surface-container rounded-xl p-1 border border-outline-variant/10">
-            <button onClick={() => setTabPdv('mesas')} className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${tabPdv === 'mesas' ? 'bg-primary-container text-on-primary-fixed' : 'text-on-surface-variant'}`}>Mesas</button>
-            <button onClick={() => setTabPdv('produtos')} className={`px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all ${tabPdv === 'produtos' ? 'bg-primary-container text-on-primary-fixed' : 'text-on-surface-variant'}`}>Produtos</button>
+          <div className="flex bg-[#1a1a1a] rounded-xl p-1 border border-[#252830]">
+            <button onClick={() => setTabPdv('mesas')} className={`px-5 py-2.5 rounded-lg text-xs font-bold uppercase transition-all ${tabPdv === 'mesas' ? 'bg-[#e8391a] text-white' : 'text-gray-400 hover:text-white'}`}>Mesas</button>
+            <button onClick={() => setTabPdv('produtos')} className={`px-5 py-2.5 rounded-lg text-xs font-bold uppercase transition-all ${tabPdv === 'produtos' ? 'bg-[#e8391a] text-white' : 'text-gray-400 hover:text-white'}`}>Produtos</button>
           </div>
         </div>
 
@@ -237,89 +237,101 @@ export default function PdvPage() {
         )}
 
         {tabPdv === 'produtos' && (
-          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="Buscar produto..." className="w-full bg-surface-container border border-outline-variant/10 rounded-xl py-3 px-5 text-sm text-on-surface mb-4 placeholder:text-on-surface-variant/40" />
+          <input value={busca} onChange={e => setBusca(e.target.value)} placeholder="Buscar produto..." className="w-full bg-[#1a1a1a] border border-[#252830] rounded-xl py-3 px-5 text-sm text-white mb-4 placeholder:text-gray-500" />
         )}
 
         <div className="flex gap-2 overflow-x-auto pb-3 mb-4">
-          <button onClick={() => setFiltro(null)} className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap ${!filtro ? 'bg-primary-container text-on-primary-fixed' : 'bg-surface-container-high text-on-surface-variant'}`}>Todos</button>
+          <button onClick={() => setFiltro(null)} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap ${!filtro ? 'bg-[#e8391a] text-white' : 'bg-[#1a1a1a] text-gray-400'}`}>Todos</button>
           {categorias.map(c => (
-            <button key={c.id} onClick={() => setFiltro(c.id)} className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap ${filtro === c.id ? 'bg-primary-container text-on-primary-fixed' : 'bg-surface-container-high text-on-surface-variant'}`}>{c.nome}</button>
+            <button key={c.id} onClick={() => setFiltro(c.id)} className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap ${filtro === c.id ? 'bg-[#e8391a] text-white' : 'bg-[#1a1a1a] text-gray-400'}`}>{c.nome}</button>
           ))}
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 overflow-y-auto flex-1">
           {filteredProdutos.map(p => (
-            <button key={p.id} onClick={() => addItem(p)} className="bg-surface-container p-4 rounded-xl border border-outline-variant/10 hover:border-primary-container/30 hover:scale-[1.02] transition-all text-left">
-              <h4 className="font-[Outfit] font-bold text-sm truncate">{p.nome}</h4>
-              <p className="text-sm font-bold text-primary mt-1">{Number(p.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+            <button key={p.id} onClick={() => addItem(p)} className="bg-[#1a1a1a] p-0 rounded-xl border border-[#252830] hover:border-[#e8391a]/30 hover:scale-[1.02] transition-all text-left overflow-hidden group">
+              <div className="w-full h-24 overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                {p.imagem_url ? (
+                  <img src={p.imagem_url} alt={p.nome} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-[#252830]">
+                    <span className="material-symbols-outlined text-3xl text-gray-600">restaurant</span>
+                  </div>
+                )}
+              </div>
+              <div className="p-3">
+                <h4 className="font-[Outfit] font-bold text-sm truncate text-white">{p.nome}</h4>
+                <p className="text-sm font-bold text-[#e8391a] mt-1">{Number(p.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+              </div>
             </button>
           ))}
         </div>
       </div>
 
       {/* Right - Cart / Order */}
-      <div className="w-96 bg-surface-container rounded-2xl border border-outline-variant/10 flex flex-col">
-        <div className="p-6 border-b border-outline-variant/10">
-          <h3 className="font-[Outfit] font-bold text-lg mb-4">Pedido Atual</h3>
+      <div className="w-96 bg-[#1a1a1a] rounded-2xl border border-[#252830] flex flex-col">
+        <div className="p-6 border-b border-[#252830]">
+          <h3 className="font-[Outfit] font-bold text-lg mb-4 text-white">Pedido Atual</h3>
           <div className="flex gap-2">
             {(['balcao', 'entrega', 'mesa'] as const).map(t => (
-              <button key={t} onClick={() => setTipo(t)} className={`flex-1 py-2 rounded-lg text-xs font-bold uppercase transition-all ${tipo === t ? 'bg-primary-container text-on-primary-fixed' : 'bg-surface-container-high text-on-surface-variant'}`}>{t}</button>
+              <button key={t} onClick={() => setTipo(t)} className={`flex-1 py-2.5 rounded-lg text-xs font-bold uppercase transition-all ${tipo === t ? 'bg-[#e8391a] text-white' : 'bg-[#252830] text-gray-400'}`}>{t}</button>
             ))}
           </div>
           {tipo === 'mesa' && (
-            <input value={mesaNumero} onChange={e => setMesaNumero(e.target.value)} placeholder="Nº Mesa" className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-2 px-3 text-sm text-on-surface mt-3" />
+            <input value={mesaNumero} onChange={e => setMesaNumero(e.target.value)} placeholder="Nº Mesa" className="w-full bg-[#16181f] border border-[#252830] rounded-lg py-2.5 px-3 text-sm text-white mt-3" />
           )}
           {tipo === 'entrega' && (
-            <input value={enderecoEntrega} onChange={e => setEnderecoEntrega(e.target.value)} placeholder="Endereço de entrega completo" className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-2 px-3 text-sm text-on-surface mt-3" />
+            <input value={enderecoEntrega} onChange={e => setEnderecoEntrega(e.target.value)} placeholder="Endereço de entrega completo" className="w-full bg-[#16181f] border border-[#252830] rounded-lg py-2.5 px-3 text-sm text-white mt-3" />
           )}
-          <input value={clienteNome} onChange={e => setClienteNome(e.target.value)} placeholder="Nome do cliente" className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-2 px-3 text-sm text-on-surface mt-3" />
+          <input value={clienteNome} onChange={e => setClienteNome(e.target.value)} placeholder="Nome do cliente" className="w-full bg-[#16181f] border border-[#252830] rounded-lg py-2.5 px-3 text-sm text-white mt-3" />
+          <input value={clienteTelefone} onChange={e => setClienteTelefone(e.target.value)} placeholder="Telefone (WhatsApp)" className="w-full bg-[#16181f] border border-[#252830] rounded-lg py-2.5 px-3 text-sm text-white mt-3" />
         </div>
 
         {/* Items */}
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           {itens.length === 0 ? (
-            <div className="text-center text-on-surface-variant/40 py-12">
+            <div className="text-center text-gray-500 py-12">
               <span className="material-symbols-outlined text-4xl mb-2 block">shopping_cart</span>
               <p className="text-sm">Adicione produtos ao pedido</p>
             </div>
           ) : itens.map(item => (
-            <div key={item.produto.id} className="flex items-center gap-3 bg-surface-container-low p-3 rounded-lg">
+            <div key={item.produto.id} className="flex items-center gap-3 bg-[#252830] p-3 rounded-lg">
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold truncate">{item.produto.nome}</p>
-                <p className="text-xs text-on-surface-variant">{Number(item.produto.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                <p className="text-sm font-bold truncate text-white">{item.produto.nome}</p>
+                <p className="text-xs text-gray-400">{Number(item.produto.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={() => removeItem(item.produto.id)} className="w-7 h-7 rounded bg-surface-container-high flex items-center justify-center"><span className="material-symbols-outlined text-sm">remove</span></button>
-                <span className="text-sm font-bold w-5 text-center">{item.quantidade}</span>
-                <button onClick={() => addItem(item.produto)} className="w-7 h-7 rounded bg-primary-container flex items-center justify-center text-on-primary-fixed"><span className="material-symbols-outlined text-sm">add</span></button>
+                <button onClick={() => removeItem(item.produto.id)} className="w-8 h-8 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-gray-400 hover:text-white"><span className="material-symbols-outlined text-sm">remove</span></button>
+                <span className="text-sm font-bold w-5 text-center text-white">{item.quantidade}</span>
+                <button onClick={() => addItem(item.produto)} className="w-8 h-8 rounded-lg bg-[#e8391a] flex items-center justify-center text-white"><span className="material-symbols-outlined text-sm">add</span></button>
               </div>
-              <span className="text-sm font-bold w-20 text-right">{(Number(item.produto.preco) * item.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+              <span className="text-sm font-bold w-20 text-right text-white">{(Number(item.produto.preco) * item.quantidade).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
             </div>
           ))}
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-outline-variant/10 space-y-3">
-          <select value={formaPagamento} onChange={e => setFormaPagamento(e.target.value)} className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-2 px-3 text-sm text-on-surface">
+        <div className="p-6 border-t border-[#252830] space-y-3">
+          <select value={formaPagamento} onChange={e => setFormaPagamento(e.target.value)} className="w-full bg-[#16181f] border border-[#252830] rounded-lg py-2.5 px-3 text-sm text-white">
             <option value="dinheiro">Dinheiro</option>
             <option value="pix">PIX</option>
             <option value="cartao_credito">Cartão Crédito</option>
             <option value="cartao_debito">Cartão Débito</option>
           </select>
           <div className="flex justify-between text-sm">
-            <span className="text-on-surface-variant">Subtotal</span>
-            <span>{subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <span className="text-gray-400">Subtotal</span>
+            <span className="text-white">{subtotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
           </div>
           <div className="flex justify-between items-center text-sm">
-            <span className="text-on-surface-variant">Desconto</span>
-            <input type="number" value={desconto || ''} onChange={e => setDesconto(Number(e.target.value))} className="w-24 text-right bg-transparent border-b border-outline-variant/20 text-sm py-0 text-on-surface" />
+            <span className="text-gray-400">Desconto</span>
+            <input type="number" value={desconto || ''} onChange={e => setDesconto(Number(e.target.value))} className="w-24 text-right bg-transparent border-b border-[#252830] text-sm py-0 text-white" />
           </div>
-          <div className="flex justify-between pt-2 border-t border-outline-variant/10">
-            <span className="font-bold text-lg">Total</span>
-            <span className="text-2xl font-[Outfit] font-bold text-primary">{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+          <div className="flex justify-between pt-2 border-t border-[#252830]">
+            <span className="font-bold text-lg text-white">Total</span>
+            <span className="text-2xl font-[Outfit] font-bold text-[#e8391a]">{total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
           </div>
-          <button onClick={salvarPedido} disabled={itens.length === 0 || salvando} className={`w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${sucesso ? 'bg-green-500 text-white' : 'bg-primary-container text-on-primary-fixed'} disabled:opacity-50`}>
-            {salvando ? <div className="w-5 h-5 border-2 border-on-primary-fixed border-t-transparent rounded-full animate-spin" /> : sucesso ? '✓ Pedido Salvo!' : 'Finalizar Pedido'}
+          <button onClick={salvarPedido} disabled={itens.length === 0 || salvando} className={`w-full py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${sucesso ? 'bg-emerald-500 text-white' : 'bg-[#e8391a] text-white'} disabled:opacity-50`}>
+            {salvando ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : sucesso ? '✓ Pedido Salvo!' : 'Finalizar Pedido'}
           </button>
         </div>
       </div>
@@ -327,36 +339,36 @@ export default function PdvPage() {
       {/* Modal Ocupar Mesa */}
       {showOcuparMesa && mesaSelecionada && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-6" onClick={() => setShowOcuparMesa(false)}>
-          <div className="bg-surface-container-high rounded-3xl p-8 w-full max-w-sm border border-outline-variant shadow-2xl animate-fade-in" onClick={e => e.stopPropagation()}>
-            <h3 className="font-[Outfit] text-2xl font-bold mb-2 text-on-surface">Ocupar Mesa {mesaSelecionada.numero}</h3>
-            <p className="text-sm text-on-surface-variant mb-6">Informe os dados para abrir a comanda</p>
+          <div className="bg-[#1a1a1a] rounded-3xl p-8 w-full max-w-sm border border-[#252830] shadow-2xl animate-fade-in" onClick={e => e.stopPropagation()}>
+            <h3 className="font-[Outfit] text-2xl font-bold mb-2 text-white">Ocupar Mesa {mesaSelecionada.numero}</h3>
+            <p className="text-sm text-gray-400 mb-6">Informe os dados para abrir a comanda</p>
             
             <div className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-on-surface-variant mb-2 block">Número de Pessoas</label>
+                <label className="text-xs font-bold text-gray-400 mb-2 block">Número de Pessoas</label>
                 <input 
                   type="number" 
                   min="1" 
                   max={mesaSelecionada.capacidade}
                   value={pessoasMesa} 
                   onChange={e => setPessoasMesa(Number(e.target.value))}
-                  className="w-full bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-3 px-4 text-sm text-on-surface" 
+                  className="w-full bg-[#16181f] border border-[#252830] rounded-xl py-3 px-4 text-sm text-white" 
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-on-surface-variant mb-2 block">Nome do Responsável (opcional)</label>
+                <label className="text-xs font-bold text-gray-400 mb-2 block">Nome do Responsável (opcional)</label>
                 <input 
                   value={responsavelMesa} 
                   onChange={e => setResponsavelMesa(e.target.value)}
                   placeholder="Ex: João"
-                  className="w-full bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-3 px-4 text-sm text-on-surface" 
+                  className="w-full bg-[#16181f] border border-[#252830] rounded-xl py-3 px-4 text-sm text-white" 
                 />
               </div>
             </div>
 
             <div className="flex gap-3 mt-8">
-              <button onClick={() => setShowOcuparMesa(false)} className="flex-1 py-3 rounded-xl border border-outline-variant/20 text-on-surface-variant font-bold text-sm">Cancelar</button>
-              <button onClick={ocuparMesa} className="flex-1 py-3 rounded-xl bg-primary-container text-on-primary-fixed font-bold text-sm">Abrir Comanda</button>
+              <button onClick={() => setShowOcuparMesa(false)} className="flex-1 py-3 rounded-xl border border-[#252830] text-gray-400 font-bold text-sm hover:text-white">Cancelar</button>
+              <button onClick={ocuparMesa} className="flex-1 py-3 rounded-xl bg-[#e8391a] text-white font-bold text-sm">Abrir Comanda</button>
             </div>
           </div>
         </div>

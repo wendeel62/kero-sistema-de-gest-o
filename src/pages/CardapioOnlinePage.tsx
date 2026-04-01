@@ -83,6 +83,20 @@ export default function CardapioOnlinePage() {
   
   useRealtime('produtos', () => fetchData())
 
+  // Tracking de eventos para o funil de vendas
+  const trackEvent = useCallback(async (tipo: 'visualizacao' | 'add_carrinho' | 'checkout_iniciado' | 'compra', quantidade: number = 1) => {
+    try {
+      const { data: configData } = await supabase.from('configuracoes').select('tenant_id').limit(1).single()
+      if (configData?.tenant_id) {
+        await supabase.from('eventos_jornada').insert({
+          tenant_id: configData.tenant_id,
+          tipo_evento: tipo,
+          quantidade
+        })
+      }
+    } catch { /* ignore tracking errors */ }
+  }, [])
+
   // Verificar dados salvos no localStorage
   useEffect(() => {
     try {
@@ -120,7 +134,9 @@ export default function CardapioOnlinePage() {
     setCart(prev => {
       const existing = prev.find(item => item.produto.id === p.id && item.tamanho === tamanho && item.tipoPizza === tipo && item.sabor1 === s1 && item.sabor2 === s2)
       if (existing) return prev.map(item => item.produto.id === p.id && item.tamanho === tamanho && item.tipoPizza === tipo && item.sabor1 === s1 && item.sabor2 === s2 ? { ...item, quantidade: item.quantidade + 1 } : item)
-      return [...prev, { produto: p, quantidade: 1, tamanho, precoUnitario: preco, tipoPizza: tipo, sabor1: s1, sabor2: s2 }]
+      const newCart = [...prev, { produto: p, quantidade: 1, tamanho, precoUnitario: preco, tipoPizza: tipo, sabor1: s1, sabor2: s2 }]
+      trackEvent('add_carrinho', 1)
+      return newCart
     })
     setShowTamanhoModal(false)
     setProdutoSelecionado(null)
@@ -179,6 +195,7 @@ export default function CardapioOnlinePage() {
 
     if (pedidoCriado?.id) {
       console.log('Setting pedidoId:', pedidoCriado.id)
+      trackEvent('compra', 1)
       setPedidoId(pedidoCriado.id)
       
       // Salvar dados do cliente no localStorage após pedido confirmado
@@ -352,8 +369,10 @@ export default function CardapioOnlinePage() {
                 <button 
                   onClick={() => {
                     if (savedCustomer) {
+                      trackEvent('checkout_iniciado', 1)
                       setStep('reconhecimento')
                     } else {
+                      trackEvent('checkout_iniciado', 1)
                       setStep('dados')
                     }
                   }} 
@@ -419,6 +438,7 @@ export default function CardapioOnlinePage() {
                     } catch {
                       // Ignorar erro
                     }
+                    trackEvent('checkout_iniciado', 1)
                     setSavedCustomer(null)
                     setVeioDeDadosSalvos(false)
                     setStep('dados')
@@ -499,6 +519,7 @@ export default function CardapioOnlinePage() {
                     )}
                     <button 
                       onClick={() => {
+                        trackEvent('checkout_iniciado', 1)
                         setStep('dados')
                         setShowDadosResumo(false)
                       }}

@@ -285,22 +285,22 @@ export default function CardapioAdminPage() {
   }
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in p-6">
       <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <span className="text-secondary font-bold uppercase tracking-[0.3em] text-[10px] mb-2 block">Gestao</span>
-          <h2 className="text-5xl font-headline font-bold text-on-background tracking-tighter">Cardapio</h2>
+          <span className="text-[#e8391a] font-bold uppercase tracking-[0.3em] text-[10px] mb-2 block">Gestao</span>
+          <h2 className="text-5xl font-[Outfit] font-bold text-white tracking-tighter">Cardapio</h2>
         </div>
-        <div className="flex bg-surface-container p-1 rounded-xl border border-outline-variant/10">
-          <button onClick={() => setTab('produtos')} className={`px-6 py-2 rounded-lg text-xs font-headline font-bold uppercase tracking-widest transition-all ${tab === 'produtos' ? 'bg-primary-container text-on-primary-fixed shadow-lg' : 'text-on-surface-variant hover:text-on-surface'}`}>Produtos</button>
-          <button onClick={() => setTab('complementos')} className={`px-6 py-2 rounded-lg text-xs font-headline font-bold uppercase tracking-widest transition-all ${tab === 'complementos' ? 'bg-primary-container text-on-primary-fixed shadow-lg' : 'text-on-surface-variant hover:text-on-surface'}`}>Complementos</button>
-          <button onClick={() => setTab('categorias')} className={`px-6 py-2 rounded-lg text-xs font-headline font-bold uppercase tracking-widest transition-all ${tab === 'categorias' ? 'bg-primary-container text-on-primary-fixed shadow-lg' : 'text-on-surface-variant hover:text-on-surface'}`}>Categorias</button>
+        <div className="flex bg-[#1a1a1a] p-1 rounded-xl border border-[#252830]">
+          <button onClick={() => setTab('produtos')} className={`px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${tab === 'produtos' ? 'bg-[#e8391a] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}>Produtos</button>
+          <button onClick={() => setTab('complementos')} className={`px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${tab === 'complementos' ? 'bg-[#e8391a] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}>Complementos</button>
+          <button onClick={() => setTab('categorias')} className={`px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${tab === 'categorias' ? 'bg-[#e8391a] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}>Categorias</button>
         </div>
       </div>
 
       {tab === 'categorias' && (
         <div>
-          <button onClick={() => { setEditCategoria({}); setShowCategoriaModal(true) }} className="mb-8 bg-primary-container text-on-primary-fixed px-8 py-4 rounded-xl font-headline font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:shadow-[0_0_20px_rgba(255,86,55,0.3)] active:scale-95 transition-all">
+          <button onClick={() => { setEditCategoria({}); setShowCategoriaModal(true) }} className="mb-8 bg-[#e8391a] text-white px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:shadow-[0_0_20px_rgba(232,57,26,0.3)] active:scale-95 transition-all">
             <span className="material-symbols-outlined text-lg">add</span> Nova Categoria
           </button>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -311,21 +311,21 @@ export default function CardapioAdminPage() {
                 onDragStart={() => setDraggedCategoria(c.id)}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => handleDropCategoria(e, c.id)}
-                className={`bg-surface-container p-8 rounded-2xl border transition-all group cursor-grab active:cursor-grabbing relative overflow-hidden ${draggedCategoria === c.id ? 'border-primary-container opacity-50 scale-95 shadow-lg' : 'border-outline-variant hover:border-primary-container/30'}`}
+                className={`bg-[#1a1a1a] p-8 rounded-2xl border transition-all group cursor-grab active:cursor-grabbing relative overflow-hidden ${draggedCategoria === c.id ? 'border-[#e8391a] opacity-50 scale-95 shadow-lg' : 'border-[#252830] hover:border-[#e8391a]/30'}`}
               >
-                <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-transparent via-outline-variant to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="material-symbols-outlined text-outline-variant/50 text-xs">drag_indicator</span>
+                <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-transparent via-[#252830] to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="material-symbols-outlined text-[#252830]/50 text-xs">drag_indicator</span>
                 </div>
                 <div className="flex justify-between items-start pl-2">
                   <div>
-                    <h4 className="font-headline font-bold text-xl text-on-surface">{c.nome}</h4>
-                    <p className="text-xs text-on-surface-variant/60 mt-2 font-body leading-relaxed">{c.descricao}</p>
+                    <h4 className="font-[Outfit] font-bold text-xl text-white">{c.nome}</h4>
+                    <p className="text-xs text-gray-500 mt-2 leading-relaxed">{c.descricao}</p>
                   </div>
                   <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => { setEditCategoria(c); setShowCategoriaModal(true) }} className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-primary hover:bg-primary hover:text-on-primary transition-all">
+                    <button onClick={() => { setEditCategoria(c); setShowCategoriaModal(true) }} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#252830] text-[#e8391a] hover:bg-[#e8391a] hover:text-white transition-all">
                       <span className="material-symbols-outlined text-lg">edit</span>
                     </button>
-                    <button onClick={() => deleteCategoria(c.id)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-error hover:bg-error hover:text-on-error transition-all">
+                    <button onClick={() => deleteCategoria(c.id)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#252830] text-red-500 hover:bg-red-500 hover:text-white transition-all">
                       <span className="material-symbols-outlined text-lg">delete</span>
                     </button>
                   </div>
@@ -338,37 +338,37 @@ export default function CardapioAdminPage() {
 
       {tab === 'produtos' && (
         <div>
-          <button onClick={() => { setEditProduto({}); setShowProdutoModal(true) }} className="mb-8 bg-primary-container text-on-primary-fixed px-8 py-4 rounded-xl font-headline font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:shadow-[0_0_20px_rgba(255,86,55,0.3)] active:scale-95 transition-all">
+          <button onClick={() => { setEditProduto({}); setShowProdutoModal(true) }} className="mb-8 bg-[#e8391a] text-white px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:shadow-[0_0_20px_rgba(232,57,26,0.3)] active:scale-95 transition-all">
             <span className="material-symbols-outlined text-lg">add</span> Novo Produto
           </button>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {produtos.map(p => (
-              <div key={p.id} className={`bg-surface-container p-6 rounded-2xl border border-outline-variant hover:border-primary-container/20 transition-all group flex flex-col ${!p.disponivel ? 'opacity-40 grayscale' : ''}`}>
+              <div key={p.id} className={`bg-[#1a1a1a] p-6 rounded-2xl border border-[#252830] hover:border-[#e8391a]/20 transition-all group flex flex-col ${!p.disponivel ? 'opacity-40 grayscale' : ''}`}>
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
-                    <h4 className="font-headline font-bold text-lg text-on-surface">{p.nome}</h4>
-                    <span className="text-[10px] font-bold text-primary-container uppercase tracking-widest">
+                    <h4 className="font-[Outfit] font-bold text-lg text-white">{p.nome}</h4>
+                    <span className="text-[10px] font-bold text-[#e8391a] uppercase tracking-widest">
                       {categorias.find(c => c.id === p.categoria_id)?.nome || 'Sem Categoria'}
                     </span>
                   </div>
-                  <span className="text-lg font-headline font-bold text-[#4ade80]">
+                  <span className="text-lg font-bold text-emerald-400">
                     {produtoPrecos[p.id]?.length ? 
                       `A partir de R$ ${Math.min(...produtoPrecos[p.id].map(t => Number(t.preco))).toFixed(2)}` : 
                       (p.preco ? Number(p.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'Sem preco')}
                   </span>
                 </div>
-                <p className="text-xs text-on-surface-variant/60 font-body mb-6 flex-1 line-clamp-2">{p.descricao}</p>
+                <p className="text-xs text-gray-500 mb-6 flex-1 line-clamp-2">{p.descricao}</p>
                 
-                <div className="flex items-center justify-between pt-4 border-t border-outline-variant/5">
+                <div className="flex items-center justify-between pt-4 border-t border-[#252830]/50">
                   <div className="flex gap-2">
-                    <button onClick={() => { setEditProduto(p); setShowProdutoModal(true); fetchPrecos(p.id) }} className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-primary hover:bg-primary hover:text-on-primary transition-all">
+                    <button onClick={() => { setEditProduto(p); setShowProdutoModal(true); fetchPrecos(p.id) }} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#252830] text-[#e8391a] hover:bg-[#e8391a] hover:text-white transition-all">
                       <span className="material-symbols-outlined text-lg">edit</span>
                     </button>
-                    <button onClick={() => deleteProduto(p.id)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-error hover:bg-error hover:text-on-error transition-all">
+                    <button onClick={() => deleteProduto(p.id)} className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#252830] text-red-500 hover:bg-red-500 hover:text-white transition-all">
                       <span className="material-symbols-outlined text-lg">delete</span>
                     </button>
                   </div>
-                  <button onClick={() => toggleDisponivel(p)} className={`text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-tighter transition-all ${p.disponivel ? 'bg-green-500/10 text-[#4ade80]' : 'bg-red-500/10 text-red-400'}`}>
+                  <button onClick={() => toggleDisponivel(p)} className={`text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-tighter transition-all ${p.disponivel ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
                     {p.disponivel ? 'No Cardapio' : 'Esgotado'}
                   </button>
                 </div>
@@ -382,30 +382,30 @@ export default function CardapioAdminPage() {
         <div>
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-headline font-bold text-on-surface">Sabores de Pizza</h3>
+              <h3 className="text-xl font-[Outfit] font-bold text-white">Sabores de Pizza</h3>
               <button 
                 onClick={() => { setEditSabor({}); setShowSaborModal(true) }} 
-                className="bg-primary-container text-on-primary-fixed px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2"
+                className="bg-[#e8391a] text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2"
               >
                 <span className="material-symbols-outlined text-sm">add</span> Novo Sabor
               </button>
             </div>
             
             {sabores.length === 0 ? (
-              <div className="p-8 bg-surface-container rounded-xl border border-outline-variant/10 text-center">
-                <p className="text-on-surface-variant">Nenhum sabor cadastrado ainda.</p>
-                <p className="text-xs text-on-surface-variant/60 mt-2">Cadastre os sabores das pizzas para permitir meio a meio.</p>
+              <div className="p-8 bg-[#1a1a1a] rounded-xl border border-[#252830] text-center">
+                <p className="text-gray-400">Nenhum sabor cadastrado ainda.</p>
+                <p className="text-xs text-gray-500 mt-2">Cadastre os sabores das pizzas para permitir meio a meio.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {sabores.map(sabor => (
-                  <div key={sabor.id} className="bg-surface-container p-4 rounded-xl border border-outline-variant/10 flex justify-between items-start">
+                  <div key={sabor.id} className="bg-[#1a1a1a] p-4 rounded-xl border border-[#252830] flex justify-between items-start">
                     <div>
-                      <h4 className="font-headline font-bold text-on-surface">{sabor.nome}</h4>
-                      <p className="text-xs text-on-surface-variant mt-1 line-clamp-2">{sabor.descricao}</p>
+                      <h4 className="font-[Outfit] font-bold text-white">{sabor.nome}</h4>
+                      <p className="text-xs text-gray-500 mt-1 line-clamp-2">{sabor.descricao}</p>
                       <button 
                         onClick={() => toggleSaborDisponivel(sabor)} 
-                        className={`inline-block mt-2 text-[10px] font-bold px-2 py-1 rounded-full cursor-pointer ${sabor.disponivel ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}
+                        className={`inline-block mt-2 text-[10px] font-bold px-2 py-1 rounded-full cursor-pointer ${sabor.disponivel ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}
                       >
                         {sabor.disponivel ? 'Disponivel' : 'Indisponivel'}
                       </button>
@@ -413,13 +413,13 @@ export default function CardapioAdminPage() {
                     <div className="flex gap-2">
                       <button 
                         onClick={() => { setEditSabor(sabor); setShowSaborModal(true) }} 
-                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-primary hover:bg-primary hover:text-on-primary transition-all"
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#252830] text-[#e8391a] hover:bg-[#e8391a] hover:text-white transition-all"
                       >
                         <span className="material-symbols-outlined text-lg">edit</span>
                       </button>
                       <button 
                         onClick={() => deleteSabor(sabor.id)} 
-                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-surface-container-high text-error hover:bg-error hover:text-on-error transition-all"
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#252830] text-red-500 hover:bg-red-500 hover:text-white transition-all"
                       >
                         <span className="material-symbols-outlined text-lg">delete</span>
                       </button>
@@ -430,10 +430,10 @@ export default function CardapioAdminPage() {
             )}
           </div>
 
-          <hr className="border-outline-variant/10 my-8" />
+          <hr className="border-[#252830] my-8" />
 
-          <div className="mb-6 p-4 bg-surface-container rounded-xl border border-outline-variant/10">
-            <p className="text-sm text-on-surface-variant">
+          <div className="mb-6 p-4 bg-[#1a1a1a] rounded-xl border border-[#252830]">
+            <p className="text-sm text-gray-400">
               Gerencie os tamanhos e precos dos produtos (ex: Pizzas - P, M, G, GG).<br/>
               Selecione um produto abaixo para adicionar ou editar seus complementos.
             </p>
@@ -446,14 +446,14 @@ export default function CardapioAdminPage() {
                 onClick={() => setSelectedProdutoComplementos(p)}
                 className={`p-4 rounded-xl border cursor-pointer transition-all ${
                   selectedProdutoComplementos?.id === p.id 
-                    ? 'bg-primary-container/20 border-primary-container' 
-                    : 'bg-surface-container border-outline-variant hover:border-primary-container/30'
+                    ? 'bg-[#e8391a]/20 border-[#e8391a]' 
+                    : 'bg-[#1a1a1a] border-[#252830] hover:border-[#e8391a]/30'
                 }`}
               >
-                <h4 className="font-headline font-bold text-on-surface">{p.nome}</h4>
+                <h4 className="font-[Outfit] font-bold text-white">{p.nome}</h4>
                 <div className="mt-2 flex flex-wrap gap-1">
                   {produtoPrecos[p.id]?.map(pt => (
-                    <span key={pt.id} className="text-[10px] bg-surface-container-high px-2 py-1 rounded-full">
+                    <span key={pt.id} className="text-[10px] bg-[#252830] px-2 py-1 rounded-full text-gray-400">
                       {pt.tamanho}: R$ {Number(pt.preco).toFixed(2)}
                     </span>
                   ))}
@@ -463,31 +463,31 @@ export default function CardapioAdminPage() {
           </div>
 
           {selectedProdutoComplementos && (
-            <div className="bg-surface-container rounded-2xl p-8 border border-outline-variant/10">
+            <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-[#252830]">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-headline font-bold text-on-surface">
+                <h3 className="text-xl font-[Outfit] font-bold text-white">
                   {selectedProdutoComplementos.nome} - Complementos
                 </h3>
                 <button 
                   onClick={() => setSelectedProdutoComplementos(null)}
-                  className="text-on-surface-variant hover:text-on-surface"
+                  className="text-gray-400 hover:text-white"
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
               </div>
 
               <div className="space-y-3 mb-6">
-                <h4 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Tamanhos cadastrados</h4>
+                <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400">Tamanhos cadastrados</h4>
                 {produtoPrecos[selectedProdutoComplementos.id]?.length === 0 ? (
-                  <p className="text-sm text-on-surface-variant/60">Nenhum tamanho cadastrado ainda.</p>
+                  <p className="text-sm text-gray-500">Nenhum tamanho cadastrado ainda.</p>
                 ) : (
                   produtoPrecos[selectedProdutoComplementos.id]?.map(pt => (
-                    <div key={pt.id} className="flex items-center justify-between bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/5">
-                      <span className="text-sm font-bold uppercase tracking-widest">{pt.tamanho} -- <span className="text-[#4ade80]">R$ {Number(pt.preco).toFixed(2)}</span></span>
+                    <div key={pt.id} className="flex items-center justify-between bg-[#252830] p-4 rounded-xl border border-[#333]">
+                      <span className="text-sm font-bold uppercase tracking-widest text-white">{pt.tamanho} -- <span className="text-emerald-400">R$ {Number(pt.preco).toFixed(2)}</span></span>
                       <button onClick={async () => {
                         await supabase.from('precos_tamanho').delete().eq('id', pt.id)
                         fetchProdutos()
-                      }} className="w-8 h-8 flex items-center justify-center bg-error/10 text-error rounded-lg hover:bg-error hover:text-white transition-all">
+                      }} className="w-8 h-8 flex items-center justify-center bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all">
                         <span className="material-symbols-outlined text-sm">close</span>
                       </button>
                     </div>
@@ -495,14 +495,14 @@ export default function CardapioAdminPage() {
                 )}
               </div>
 
-              <div className="border-t border-outline-variant/10 pt-6">
-                <h4 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">Adicionar novo tamanho</h4>
+              <div className="border-t border-[#252830] pt-6">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Adicionar novo tamanho</h4>
                 <div className="flex gap-3">
                   <input 
                     value={newTamanho} 
                     onChange={e => setNewTamanho(e.target.value)} 
                     placeholder="Tamanho (Ex: P, M, G, GG)" 
-                    className="flex-1 bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-3 px-4 text-sm text-on-surface" 
+                    className="flex-1 bg-[#16181f] border border-[#252830] rounded-xl py-3 px-4 text-sm text-white" 
                   />
                   <input 
                     value={newPrecoValor} 
@@ -510,11 +510,11 @@ export default function CardapioAdminPage() {
                     type="number" 
                     step="0.01" 
                     placeholder="R$ 0,00" 
-                    className="w-32 bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-3 px-4 text-sm text-on-surface" 
+                    className="w-32 bg-[#16181f] border border-[#252830] rounded-xl py-3 px-4 text-sm text-white" 
                   />
                   <button 
                     onClick={() => addPreco(selectedProdutoComplementos.id)} 
-                    className="bg-primary-container text-on-primary-fixed px-6 rounded-xl text-sm font-bold uppercase"
+                    className="bg-[#e8391a] text-white px-6 rounded-xl text-sm font-bold uppercase"
                   >
                     +
                   </button>
@@ -525,13 +525,13 @@ export default function CardapioAdminPage() {
 
           {produtos.filter(p => !produtoPrecos[p.id]?.length).length > 0 && (
             <div className="mt-8">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">Produtos sem complementos ainda</h4>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Produtos sem complementos ainda</h4>
               <div className="flex flex-wrap gap-2">
                 {produtos.filter(p => !produtoPrecos[p.id]?.length).map(p => (
                   <button
                     key={p.id}
                     onClick={() => setSelectedProdutoComplementos(p)}
-                    className="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-on-surface-variant hover:bg-primary-container/20 hover:text-primary transition-all"
+                    className="px-4 py-2 bg-[#1a1a1a] rounded-full text-xs font-bold text-gray-400 hover:bg-[#e8391a]/20 hover:text-[#e8391a] transition-all"
                   >
                     + {p.nome}
                   </button>
@@ -544,21 +544,21 @@ export default function CardapioAdminPage() {
 
       {showCategoriaModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] flex items-center justify-center p-6" onClick={() => setShowCategoriaModal(false)}>
-          <div className="bg-surface-container-high rounded-3xl p-10 w-full max-w-lg border border-outline-variant shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-fade-in" onClick={e => e.stopPropagation()}>
-            <h3 className="font-headline text-3xl font-bold mb-8 text-on-surface tracking-tight">{editCategoria?.id ? 'Editar' : 'Nova'} Categoria</h3>
+          <div className="bg-[#1a1a1a] rounded-3xl p-10 w-full max-w-lg border border-[#252830] shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-fade-in" onClick={e => e.stopPropagation()}>
+            <h3 className="text-3xl font-bold mb-8 text-white tracking-tight">{editCategoria?.id ? 'Editar' : 'Nova'} Categoria</h3>
             <div className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant/60 ml-1">Nome da Categoria</label>
-                <input value={editCategoria?.nome || ''} onChange={e => setEditCategoria(p => ({ ...p, nome: e.target.value }))} placeholder="Ex: Pizzas Gourmet" className="w-full bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-4 px-5 text-sm text-on-surface" />
+                <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Nome da Categoria</label>
+                <input value={editCategoria?.nome || ''} onChange={e => setEditCategoria(p => ({ ...p, nome: e.target.value }))} placeholder="Ex: Pizzas Gourmet" className="w-full bg-[#16181f] border border-[#252830] rounded-xl py-4 px-5 text-sm text-white" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant/60 ml-1">Descricao</label>
-                <textarea value={editCategoria?.descricao || ''} onChange={e => setEditCategoria(p => ({ ...p, descricao: e.target.value }))} placeholder="Pequena descricao para o cardapio" rows={3} className="w-full bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-4 px-5 text-sm text-on-surface resize-none" />
+                <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Descricao</label>
+                <textarea value={editCategoria?.descricao || ''} onChange={e => setEditCategoria(p => ({ ...p, descricao: e.target.value }))} placeholder="Pequena descricao para o cardapio" rows={3} className="w-full bg-[#16181f] border border-[#252830] rounded-xl py-4 px-5 text-sm text-white resize-none" />
               </div>
             </div>
             <div className="flex gap-4 mt-10">
-              <button onClick={() => setShowCategoriaModal(false)} className="flex-1 py-4 rounded-xl border border-outline-variant/10 text-on-surface-variant font-headline font-bold text-xs uppercase tracking-widest hover:bg-surface-container-high transition-all">Cancelar</button>
-              <button onClick={saveCategoria} className="flex-1 py-4 rounded-xl bg-primary-container text-on-primary-fixed font-headline font-bold text-xs uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,86,55,0.3)] transition-all">Salvar</button>
+              <button onClick={() => setShowCategoriaModal(false)} className="flex-1 py-4 rounded-xl border border-[#252830] text-gray-400 font-bold text-xs uppercase tracking-widest hover:bg-[#252830] transition-all">Cancelar</button>
+              <button onClick={saveCategoria} className="flex-1 py-4 rounded-xl bg-[#e8391a] text-white font-bold text-xs uppercase tracking-widest hover:shadow-[0_0_20px_rgba(232,57,26,0.3)] transition-all">Salvar</button>
             </div>
           </div>
         </div>
@@ -566,28 +566,28 @@ export default function CardapioAdminPage() {
 
       {showSaborModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] flex items-center justify-center p-6" onClick={() => setShowSaborModal(false)}>
-          <div className="bg-surface-container-high rounded-3xl p-10 w-full max-w-lg border border-outline-variant shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-fade-in" onClick={e => e.stopPropagation()}>
-            <h3 className="font-headline text-3xl font-bold mb-8 text-on-surface tracking-tight">{editSabor?.id ? 'Editar' : 'Novo'} Sabor</h3>
+          <div className="bg-[#1a1a1a] rounded-3xl p-10 w-full max-w-lg border border-[#252830] shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-fade-in" onClick={e => e.stopPropagation()}>
+            <h3 className="text-3xl font-bold mb-8 text-white tracking-tight">{editSabor?.id ? 'Editar' : 'Novo'} Sabor</h3>
             <div className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant/60 ml-1">Nome do Sabor</label>
-                <input value={editSabor?.nome || ''} onChange={e => setEditSabor(p => ({ ...p, nome: e.target.value }))} placeholder="Ex: Margherita" className="w-full bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-4 px-5 text-sm text-on-surface" />
+                <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Nome do Sabor</label>
+                <input value={editSabor?.nome || ''} onChange={e => setEditSabor(p => ({ ...p, nome: e.target.value }))} placeholder="Ex: Margherita" className="w-full bg-[#16181f] border border-[#252830] rounded-xl py-4 px-5 text-sm text-white" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant/60 ml-1">Descricao</label>
-                <textarea value={editSabor?.descricao || ''} onChange={e => setEditSabor(p => ({ ...p, descricao: e.target.value }))} placeholder="Ex: Molho de tomate, mussarela, manjericao fresco" rows={3} className="w-full bg-background border-none focus:ring-1 focus:ring-primary-container rounded-xl py-4 px-5 text-sm text-on-surface resize-none" />
+                <label className="text-[10px] uppercase tracking-widest font-bold text-gray-500 ml-1">Descricao</label>
+                <textarea value={editSabor?.descricao || ''} onChange={e => setEditSabor(p => ({ ...p, descricao: e.target.value }))} placeholder="Ex: Molgo de tomate, mussarela, manjericao fresco" rows={3} className="w-full bg-[#16181f] border border-[#252830] rounded-xl py-4 px-5 text-sm text-white resize-none" />
               </div>
               <label className="flex items-center gap-3 cursor-pointer group">
-                <div className={`w-5 h-5 rounded flex items-center justify-center border-2 transition-all ${editSabor?.disponivel !== false ? 'bg-primary-container border-primary-container' : 'border-outline-variant/30'}`}>
+                <div className={`w-5 h-5 rounded flex items-center justify-center border-2 transition-all ${editSabor?.disponivel !== false ? 'bg-[#e8391a] border-[#e8391a]' : 'border-[#444]'}`}>
                   <input type="checkbox" className="hidden" checked={editSabor?.disponivel ?? true} onChange={e => setEditSabor(p => ({ ...p, disponivel: e.target.checked }))} />
                   {editSabor?.disponivel !== false && <span className="material-symbols-outlined text-white text-base">check</span>}
                 </div>
-                <span className="text-sm font-headline font-bold uppercase tracking-widest opacity-80 group-hover:opacity-100">Disponivel</span>
+                <span className="text-sm font-bold uppercase tracking-widest opacity-80 group-hover:opacity-100 text-white">Disponivel</span>
               </label>
             </div>
             <div className="flex gap-4 mt-10">
-              <button onClick={() => setShowSaborModal(false)} className="flex-1 py-4 rounded-xl border border-outline-variant/10 text-on-surface-variant font-headline font-bold text-xs uppercase tracking-widest hover:bg-surface-container-high transition-all">Cancelar</button>
-              <button onClick={saveSabor} className="flex-1 py-4 rounded-xl bg-primary-container text-on-primary-fixed font-headline font-bold text-xs uppercase tracking-widest hover:shadow-[0_0_20px_rgba(255,86,55,0.3)] transition-all">Salvar</button>
+              <button onClick={() => setShowSaborModal(false)} className="flex-1 py-4 rounded-xl border border-[#252830] text-gray-400 font-bold text-xs uppercase tracking-widest hover:bg-[#252830] transition-all">Cancelar</button>
+              <button onClick={saveSabor} className="flex-1 py-4 rounded-xl bg-[#e8391a] text-white font-bold text-xs uppercase tracking-widest hover:shadow-[0_0_20px_rgba(232,57,26,0.3)] transition-all">Salvar</button>
             </div>
           </div>
         </div>

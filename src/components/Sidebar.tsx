@@ -11,7 +11,6 @@ const navItems = [
   { path: '/financeiro', icon: 'payments', label: 'Financeiro' },
   { path: '/entregas', icon: 'local_shipping', label: 'Entrega' },
   { path: '/whatsapp', icon: 'chat', label: 'WhatsApp' },
-  { path: '/gestor-consultor', icon: 'smart_toy', label: 'Gestor' },
   { path: '/configuracoes', icon: 'settings', label: 'Configurações' },
 ]
 

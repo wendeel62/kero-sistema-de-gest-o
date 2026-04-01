@@ -17,7 +17,6 @@ import MesaPage from './pages/MesaPage'
 import EntregasPage from './pages/EntregasPage'
 import MotoboyApp from './pages/MotoboyApp'
 import PedidoStatusPage from './pages/PedidoStatusPage'
-import AgenteIaPage from './pages/AgenteIaPage'
 import WhatsappInboxPage from './pages/WhatsappInboxPage'
 
 const queryClient = new QueryClient({
@@ -56,7 +55,6 @@ export default function App() {
               <Route path="/estoque" element={<EstoquePage />} />
               <Route path="/financeiro" element={<FinanceiroPage />} />
               <Route path="/entregas" element={<EntregasPage />} />
-              <Route path="/gestor-consultor" element={<AgenteIaPage />} />
               <Route path="/whatsapp" element={<WhatsappInboxPage />} />
               <Route path="/configuracoes" element={<ConfiguracoesPage />} />
             </Route>
